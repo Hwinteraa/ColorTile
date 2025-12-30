@@ -1,0 +1,249 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+a, a:link, a:visited{
+  color:inherit;
+  text-decoration:none;
+}
+li{
+  list-style:none;
+}
+.container{
+  width:1140px;
+  margin:0 auto;
+}
+
+/* header.css */
+header{
+  position:fixed;
+  color:white;
+  top:0;
+  z-index:1;
+  width:100%;
+  padding:1rem;
+  background-color:rgb(0, 0, 0);
+}
+header .container{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+}
+header nav ul{
+  display:flex;
+}
+header nav ul li{
+  padding:10px;
+}
+header button{
+  background: transparent;
+  border:0;
+  cursor: pointer;
+  color:white; 
+}
+header h1 button{
+  font-size: 2rem;
+  font-weight: bold;
+}
+header nav ul li button{
+  font-size: 1.2rem;
+}
+/* End header.css */
+
+/* what_i_do.css */
+section{
+  font-family: sans-serif;
+  padding:5rem 0;
+}
+section:nth-child(2n){
+  background-color:#f8f8f8;
+}
+section .title{
+  margin-bottom:3rem;
+}
+section .title h4{
+  font-size:1.35rem;
+  color:#ed4848;
+  position:relative;
+}
+section .title h2{
+  font-size:3.5rem; 
+}
+section .title p{
+  font-size:1.15rem;
+}
+
+/* what_i_do.css */
+/* float 속성 해제*/
+section .do-me::after{
+  content:"";
+  display:block;
+  clear:both;
+}
+/* 사각형 크기와 간격, 내부 여백 설정 */
+section .do-me .do-inner{
+  width:30%;
+  margin-right:5%;
+  padding:1rem 1rem 1.5rem 1rem;
+  float:left;
+  background-color:#f8f8f8;
+  border:1px solid #ccc;
+  margin-bottom:3rem;
+  cursor:pointer;
+}
+/* 3번째마다 margin-right 0 적용 */
+section .do-me .do-inner:nth-child(3n){
+  margin-right:0;
+}
+/* 이미지의 크기가 부모 요소를 넘지 않도록 100%로 지정 */
+section .do-me .do-inner img{
+  width:100%;
+  display:block;
+}
+/* HTML5, CSS3, BootStrap v5.0 텍스트 크기와 간격 */
+section .do-me .do-inner .content h3{
+  font-size:2rem;
+  margin:1rem 0;
+}
+/* 사각형 텍스트 크기 */
+section .do-me .do-inner .content p{
+  font-size:1.15rem;
+}
+/* do-inner 클래스에 마우스를 올리면 배경색과 텍스트 색상 변경 */
+section .do-me .do-inner:hover{
+  background-color:lightcoral;
+  color:white;
+}
+/* do-inner 클래스에 마우스를 올리면 아이콘 폰트 색상 변경 */
+section .do-me .do-inner:hover i{
+  color:white;
+}
+/* End what_i_do.css */
+
+/* portfolio.css */
+/* clear 속성으로 float 속성값 해제*/
+section.portfolio::after{
+  content:"";
+  display:block;
+  clear:both;
+}
+/* portfolio-inner 사각형 꾸미기 */
+section.portfolio .portfolio-inner{
+  width:100%;
+  padding:1rem 1rem 1.5rem 1rem;
+  float:left;
+  background-color:#f8f8f8;
+  border:1px solid #ccc;
+  margin-bottom:3rem;
+  font-size:1.15rem;
+}
+/* 이미지의 크기가 부모 요소를 넘지 않도록 100%로 지정 */
+section.portfolio .portfolio-inner img{
+  width:100%;
+}
+/* strong 태그 색상과 간격 */
+section.portfolio .portfolio-inner strong{
+  color:#ff6a6a;
+  margin:0.5rem 0;
+  display:block;
+}
+/* h3 태그 색상과 간격 */
+section.portfolio .portfolio-inner h3{
+  font-size:1.75rem;
+  margin:0.5rem 0;
+}
+/* End portfolio.css */
+
+/* media.css */
+@media screen and (max-width: 1140px){
+
+  /* 메인 container 기준 1140 -> 992px */
+  main .container{
+    width: 992px;
+  }
+  
+  /* 섹션 container 기준 1140 -> 600px */
+  section .container{
+    width:600px;
+  }
+
+  /* What I Do 영역의 콘텐츠 박스의 너비를 30% -> 48% 변경 */
+  section .do-me .do-inner{
+    width:48%;
+    margin-bottom: 1.5rem;
+    margin-right: 0;
+  }
+
+  section .do-me .do-inner:nth-child(2n+1){
+    margin-right:4%; /* 1, 3, 5...번째 본문 사각형에 margin-right 4% 적용 */
+  }
+}
+
+@media (max-width: 992px){
+  html{
+    font-size: 14px;
+  }
+
+  /* 메인 영역 container 기준 너비 변경 */
+  main .container{
+    width: 768px; /* 992px -> 768px */
+  }
+}
+
+@media (max-width: 768px){
+  html{
+    font-size: 13px;
+  }
+  
+  /* 메인 영역 container 기준 너비 변경 */
+  main .container{
+    width: 576px; /* 768px -> 576px */
+  }
+
+  section .container{
+    width:400px; /* 600px -> 400px */
+  }
+
+  section .do-me .do-inner{
+    width:100%; /* 48% -> 100% */
+    margin-right: 0; /* margin 초기화 */
+  }
+}
+
+@media (max-width: 576px){
+  
+  html{
+    font-size: 12px;
+  }
+
+  main .container{
+    width: 400px; /* 576px -> 400px */
+  }
+
+  section .container{
+    width:360px; /* 400px -> 360px */
+  }
+}
+
+@media (max-width: 400px){
+  
+  html{
+    font-size: 11px;
+  }
+  main .container{
+    width: 320px;/* 400px -> 320px */
+  }
+
+  main h4{
+    font-size: 1.5rem;
+  }
+  section .container{
+    width: 320px;/* 360px -> 320px */
+  }
+  section .title h2{
+    font-size: 3rem; /* 3.5rem -> 3rem */
+  }
+}
+/* End media.css */

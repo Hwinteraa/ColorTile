@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .question {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .quiz-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* 결과 화면 스타일 (처음엔 숨김) */
+        #result {
+            display: none; /* 평소엔 안 보임 */
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+            /* 틀렸을 때 스타일 */
+            #result.fail {
+                background-color: #f8d7da;
+                color: #721c24;
+                border-color: #f5c6cb;
+            }
+
+        button.submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            button.submit-btn:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- header -->
+    <header>
+        <div class="container">
+            <h1>
+                <button onclick="window.location.href='../index.html';">GC</button>
+            </h1>
+        </div>
+    </header>
+    <!-- //end header -->
+    <!-- PortFolio -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="title">
+                <h4>2022100290</h4>
+                <h2>Quiz</h2>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <h1>Quiz 2022100290</h1>
+
+    <div id="quiz">
+
+        <div id="question1" class="quiz-item">
+            <div class="question">1. Which is not a main file type that we use to make websites?</div>
+            <label><input type="radio" name="question1" value="a" /> .html</label>
+            <label><input type="radio" name="question1" value="b" /> .exe</label>
+            <label><input type="radio" name="question1" value="c" /> .js</label>
+            <label><input type="radio" name="question1" value="d" /> .css</label>
+        </div>
+
+        <div id="question2" class="quiz-item">
+            <div class="question">2. A JavaScript object is wrapped by what characters?</div>
+            <label><input type="radio" name="question2" value="a" /> []</label>
+            <label><input type="radio" name="question2" value="b" /> ;;</label>
+            <label><input type="radio" name="question2" value="c" /> {}</label>
+            <label><input type="radio" name="question2" value="d" /> ()</label>
+        </div>
+
+        <div id="question3" class="quiz-item">
+            <div class="question">3. Moles are which of the following?</div>
+            <label><input type="radio" name="question3" value="a" /> Omniverous</label>
+            <label><input type="radio" name="question3" value="b" /> Adorable</label>
+            <label><input type="radio" name="question3" value="c" /> Whackable</label>
+            <label><input type="radio" name="question3" value="d" /> All of the above</label>
+        </div>
+
+        <div id="question4" class="quiz-item">
+            <div class="question">4. In Japanese "か" is pronounced...</div>
+            <label><input type="radio" name="question4" value="a" /> ka</label>
+            <label><input type="radio" name="question4" value="b" /> ko</label>
+            <label><input type="radio" name="question4" value="c" /> ke</label>
+            <label><input type="radio" name="question4" value="d" /> ki</label>
+        </div>
+
+        <div id="question5" class="quiz-item">
+            <div class="question">5. The gravitational constant on earth is approximately...</div>
+            <label><input type="radio" name="question5" value="a" /> 10m/s^2</label>
+            <label><input type="radio" name="question5" value="b" /> .809m/s^2</label>
+            <label><input type="radio" name="question5" value="c" /> 9.81m/s^2</label>
+            <label><input type="radio" name="question5" value="d" /> 84.4m/s^2</label>
+        </div>
+
+        <div id="question6" class="quiz-item">
+            <div class="question">6. 45 (in base 10) is what in binary (base 2)?</div>
+            <label><input type="radio" name="question6" value="a" /> 101101</label>
+            <label><input type="radio" name="question6" value="b" /> 110011</label>
+            <label><input type="radio" name="question6" value="c" /> 011101</label>
+            <label><input type="radio" name="question6" value="d" /> 101011</label>
+        </div>
+
+        <div id="question7" class="quiz-item">
+            <div class="question">7. 4 << 2 = ...</div>
+            <label><input type="radio" name="question7" value="a" /> 16</label>
+            <label><input type="radio" name="question7" value="b" /> 4</label>
+            <label><input type="radio" name="question7" value="c" /> 2</label>
+            <label><input type="radio" name="question7" value="d" /> 8</label>
+        </div>
+
+        <div id="question8" class="quiz-item">
+            <div class="question">8. Finding the hypotenuse uses?</div>
+            <label><input type="radio" name="question8" value="a" /> Pi*Radius^2</label>
+            <label><input type="radio" name="question8" value="b" /> Pythagorean Theorem</label>
+            <label><input type="radio" name="question8" value="c" /> Calculator?</label>
+            <label><input type="radio" name="question8" value="d" /> Sin(side1 + side2)</label>
+        </div>
+
+        <div id="question9" class="quiz-item">
+            <div class="question">9. T/F: All games must run at 60fps to be good.</div>
+            <label><input type="radio" name="question9" value="a" /> True</label>
+            <label><input type="radio" name="question9" value="b" /> False</label>
+        </div>
+
+        <div id="question10" class="quiz-item">
+            <div class="question">10. Using a server can help you to...</div>
+            <label><input type="radio" name="question10" value="a" /> hide your code.</label>
+            <label><input type="radio" name="question10" value="b" /> have a performant game.</label>
+            <label><input type="radio" name="question10" value="c" /> create shared experiences.</label>
+            <label><input type="radio" name="question10" value="d" /> all of the above.</label>
+        </div>
+
+    </div>
+
+    <div id="result"></div>
+
+    <button class="submit-btn" onclick="checkAnswers()">결과 확인하기</button>
+
+    <script>
+        function checkAnswers() {
+            // 정답지 (각 문제 번호에 해당하는 정답 value)
+            const answers = {
+                question1: 'b', // .exe
+                question2: 'c', // {}
+                question3: 'd', // all of the above
+                question4: 'a', // ka
+                question5: 'c', // 9.81
+                question6: 'a', // 101101
+                question7: 'a', // 16
+                question8: 'b', // Pythagorean
+                question9: 'b', // False
+                question10: 'd' // all of the above
+            };
+
+            let score = 0;
+            let total = 10;
+            let resultText = "";
+            let allCorrect = true;
+
+            // 1번부터 10번까지 반복하며 채점
+            for (let i = 1; i <= total; i++) {
+                const questionName = 'question' + i;
+                // 사용자가 체크한 input 요소 찾기
+                const checkedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+
+                // 체크한 값이 있고, 정답과 같다면 점수 추가
+                if (checkedOption && checkedOption.value === answers[questionName]) {
+                    score++;
+                } else {
+                    allCorrect = false; // 하나라도 틀리면 만점 아님
+                }
+            }
+
+            // 결과 화면 표시 로직
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block'; // 숨겨진 박스를 보이게 함
+
+            if (score === total) {
+                // 만점일 때
+                resultDiv.className = ''; // fail 클래스 제거
+                resultDiv.innerHTML = "축하합니다! 모든 문제를 맞히셨습니다! 🎉 (10/10)";
+            } else {
+                // 틀린 문제가 있을 때
+                resultDiv.className = 'fail'; // 빨간색 스타일 적용
+                resultDiv.innerHTML = `아쉽네요. ${score}점 입니다. 다시 도전해보세요! (${score}/${total})`;
+            }
+
+            // 스크롤을 결과창으로 이동
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

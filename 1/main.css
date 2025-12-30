@@ -1,0 +1,23 @@
+body{
+	margin-left:30px;
+}
+
+/* #qiuz{
+	display:none;
+} */
+
+#question1, #question2, #question3,
+#question4, #question5, #question6,
+#question7, #question8, #question9,
+#question10 {
+display:none;
+}
+
+canvas{
+ display:none;
+}
+
+.correct{
+ background-color:#24399f;
+ color:white;
+}

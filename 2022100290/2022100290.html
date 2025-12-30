@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022100290</title>
+    <link rel="stylesheet" href="../style.css">
+    <style></style>
+
+
+    <title>Game: Find the Odd Color (Fixed 5x6)</title>
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+    <script type="text/javascript">
+        var canvas;
+        var stage;
+
+        // 타일 설정
+        var squareSide = 70;
+        var squareOutline = 3;
+        var squarePadding = 10;
+
+        // 게임 상태 변수
+        var currentStage = 1;
+        var maxStages = 3;
+        var timeAllowable;
+        var squares = [];
+
+        // UI 텍스트
+        var timerText;
+        var stageText;
+        var messageText;
+
+        function init() {
+            canvas = document.getElementById('myCanvas');
+            stage = new createjs.Stage(canvas);
+
+            createjs.Touch.enable(stage);
+            stage.enableMouseOver(10);
+
+            // UI 텍스트 초기화
+            timerText = new createjs.Text("", "bold 30px Arial", "#333");
+            timerText.x = 800;
+            timerText.y = 20;
+
+            stageText = new createjs.Text("", "bold 30px Arial", "#0055FF");
+            stageText.x = 20;
+            stageText.y = 20;
+
+            messageText = new createjs.Text("다른 색깔을 찾으세요!", "20px Arial", "#666");
+            messageText.x = 20;
+            messageText.y = 60;
+
+            stage.addChild(timerText, stageText, messageText);
+
+            createjs.Ticker.timingMode = createjs.Ticker.RAF;
+            createjs.Ticker.addEventListener("tick", tick);
+            createjs.Ticker.paused = false;
+
+            currentStage = 1;
+            startLevel(currentStage);
+        }
+
+        function startLevel(level) {
+            // 기존 타일 제거
+            if (squares.length > 0) {
+                for (var i = 0; i < squares.length; i++) {
+                    stage.removeChild(squares[i]);
+                }
+                squares = [];
+            }
+
+            // [수정됨] 모든 스테이지 공통 설정: 5행 6열
+            var rows = 5;
+            var cols = 6;
+
+            // 난이도 및 제한시간 설정
+            var difficulty, timeLimit;
+
+            if (level === 1) {
+                difficulty = 30;
+                timeLimit = 15;
+            } else if (level === 2) {
+                difficulty = 20;
+                timeLimit = 15;
+            } else { // Level 3
+                difficulty = 10;
+                timeLimit = 15;
+            }
+
+            // 상태 업데이트
+            timeAllowable = timeLimit;
+            stageText.text = "STAGE " + level + " / " + maxStages;
+            messageText.text = "다른 색 타일을 찾으세요! (난이도: " + (4 - level) + ")"; // 난이도 표시용 텍스트
+            messageText.color = "#666";
+
+            // 색상 생성
+            var colors = generateSimilarColors(difficulty);
+            var baseColor = colors.base;
+            var targetColor = colors.target;
+
+            var numberOfTiles = rows * cols;
+            var targetIndex = Math.floor(Math.random() * numberOfTiles);
+
+            // 화면 중앙 배치를 위한 좌표 계산
+            var gridWidth = cols * (squareSide + squarePadding) - squarePadding;
+            var gridHeight = rows * (squareSide + squarePadding) - squarePadding;
+            var startX = (canvas.width - gridWidth) / 2;
+            var startY = (canvas.height - gridHeight) / 2 + 30;
+
+            for (var i = 0; i < numberOfTiles; i++) {
+                var isTarget = (i === targetIndex);
+                var color = isTarget ? targetColor : baseColor;
+
+                var square = drawSquare(color);
+
+                // 위치 잡기
+                var c = i % cols;
+                var r = Math.floor(i / cols);
+
+                square.x = startX + (c * (squareSide + squarePadding));
+                square.y = startY + (r * (squareSide + squarePadding));
+
+                square.isTarget = isTarget;
+                square.originalColor = color;
+                square.cursor = "pointer";
+
+                square.on("click", handleTileClick);
+
+                squares.push(square);
+                stage.addChild(square);
+            }
+
+            createjs.Ticker.paused = false;
+            stage.update();
+        }
+
+        function drawSquare(color) {
+            var shape = new createjs.Shape();
+            var graphics = shape.graphics;
+
+            graphics.setStrokeStyle(squareOutline);
+            graphics.beginStroke("#555");
+            graphics.beginFill(color);
+            graphics.rect(0, 0, squareSide, squareSide);
+
+            var hit = new createjs.Shape();
+            hit.graphics.beginFill("#000").rect(0, 0, squareSide, squareSide);
+            shape.hitArea = hit;
+
+            return shape;
+        }
+
+        function generateSimilarColors(difficulty) {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+
+            function shiftColor(c, amount) {
+                var next = c + amount;
+                if (next > 255) return c - amount;
+                if (next < 0) return c + Math.abs(amount);
+                return next;
+            }
+
+            // 난이도(difficulty) 값을 사용하여 색상 차이를 만듭니다.
+            // difficulty가 작을수록(10) 색상 차이가 적어 찾기 어렵습니다.
+            var sign = Math.random() < 0.5 ? -1 : 1;
+            var variance = difficulty * sign;
+
+            var r2 = shiftColor(r, variance);
+            var g2 = shiftColor(g, variance);
+            var b2 = shiftColor(b, variance);
+
+            return {
+                base: createjs.Graphics.getRGB(r, g, b),
+                target: createjs.Graphics.getRGB(r2, g2, b2)
+            };
+        }
+
+        function handleTileClick(event) {
+            if (createjs.Ticker.paused) return;
+
+            var tile = event.currentTarget;
+
+            if (tile.isTarget === true) {
+                createjs.Ticker.paused = true;
+
+                // 정답 강조
+                tile.graphics.clear().setStrokeStyle(5).beginStroke("red").beginFill(tile.originalColor).rect(0, 0, squareSide, squareSide);
+                stage.update();
+
+                if (currentStage < maxStages) {
+                    messageText.text = "정답! 다음 스테이지로...";
+                    messageText.color = "blue";
+                    stage.update();
+
+                    setTimeout(function () {
+                        currentStage++;
+                        startLevel(currentStage);
+                    }, 1000);
+                } else {
+                    messageText.text = "축하합니다! 모든 스테이지 클리어!";
+                    messageText.color = "blue";
+                    stage.update();
+                    gameOver(true);
+                }
+            } else {
+                messageText.text = "틀렸습니다! 시간이 줄어듭니다.";
+                messageText.color = "red";
+                timeAllowable -= 3;
+                stage.update();
+            }
+        }
+
+        function tick(event) {
+            if (!createjs.Ticker.paused) {
+                timeAllowable -= event.delta / 1000;
+
+                if (timeAllowable <= 0) {
+                    timeAllowable = 0;
+                    gameOver(false);
+                }
+
+                timerText.text = "Time: " + timeAllowable.toFixed(1);
+
+                if (timeAllowable < 5) timerText.color = "red";
+                else timerText.color = "#333";
+
+                stage.update();
+            }
+        }
+
+        function gameOver(win) {
+            createjs.Ticker.paused = true;
+
+            for (var i = 0; i < squares.length; i++) {
+                squares[i].removeAllEventListeners();
+                squares[i].alpha = 0.5;
+            }
+
+            var replayParagraph = document.getElementById("replay");
+            replayParagraph.innerHTML = "<a href='#' onclick='window.location.reload();' style='font-size:20px; font-weight:bold;'>다시 하기 (Play Again)</a>";
+
+            if (win) {
+                stageText.text = "ALL CLEAR!";
+                stageText.color = "green";
+            } else {
+                stageText.text = "GAME OVER";
+                stageText.color = "red";
+                messageText.text = "시간이 종료되었습니다.";
+            }
+            stage.update();
+        }
+    </script>
+</head>
+<body onload="init()">
+    <!-- header -->
+    <header>
+        <div class="container">
+            <h1>
+                <button onclick="window.location.href='../index.html';">GC</button>
+            </h1>
+        </div>
+    </header>
+    <!-- //end header -->
+    <!-- PortFolio -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="title">
+                <h4>2022100290</h4>
+                <h2>Mini Game</h2>
+                <h3>__Color tiles</h3>
+            </div>
+            <!--<div class="portfolio-me">
+              <div class="portfolio-inner">
+                <img src="2022100290.png">
+              </div>
+            </div>-->
+        </div>
+    </section>
+
+    <header style="text-align:center; padding: 10px;">
+        <!--<p id="replay"></p>-->
+    </header>
+
+    <div style="text-align:center;">
+        <canvas id="myCanvas" width="960" height="600" style="background-color: #f9f9f9; border:2px solid #ccc; border-radius: 10px;"></canvas>
+        <p id="replay" style="margin-top: 15px; font-size:24px; font-weight:bold;"></p>
+    </div>
+    <!-- //end PortFolio -->
+</body>
+</html>
